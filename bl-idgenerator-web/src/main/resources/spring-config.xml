@@ -5,12 +5,14 @@
 
     <!-- 属性文件读入 -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
         <property name="locations">
             <list>
                 <value>classpath:*.properties</value>
             </list>
         </property>
     </bean>
+
     <import resource="classpath:spring/spring*.xml" />
 
 </beans>

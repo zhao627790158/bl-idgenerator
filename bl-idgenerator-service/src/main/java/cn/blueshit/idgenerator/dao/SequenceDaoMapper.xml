@@ -4,10 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.blueshit.idgenerator.dao.SequenceDao">
 
+
+    <select id="getCurrVal" resultType="java.lang.Long" parameterType="java.lang.String">
+        SELECT currentValue FROM sequence WHERE seqName = #{value}
+    </select>
+
     <update id="autoIncrease">
-    UPDATE bl_sequence
-     SET currentValue = currentValue + increment
-      WHERE seqName = #{value}
-  </update>
+        UPDATE sequence SET currentValue = currentValue + increment WHERE seqName = #{value}
+    </update>
+
+    <update id="increase">
+        UPDATE sequence SET currentValue = currentValue + #{param2} WHERE seqName = #{param1}
+    </update>
+
+    <select id="getAllSequences" resultType="com.jd.ql.framework.idgenerator.domain.Sequence">
+        SELECT seqName, currentValue, increment FROM sequence
+    </select>
 
 </mapper>
