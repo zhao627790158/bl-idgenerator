@@ -50,13 +50,16 @@ public class MysqlSequenceServiceImpl implements SequenceService {
     /**
      * 批量获取一定数量的id用来填充h2数据库
      * 一定要有事务
-     *
      * @param sequenceName
      * @param count
      * @return
      */
     @Override
     public Long[] getBatchNextVal(String sequenceName, int count) {
+        //========================================
+        //可以尝试用threadlock防不同的数据源,不同的数据源有不同的transactionManager
+        //根据数据源来获取相应的transactionmanager来手动管理事务
+        //========================================
         if (count > batchMaxSize) {
             logger.error("请求生成id数量超过最大限制,自动设置为" + batchMaxSize);
             count = batchMaxSize;
