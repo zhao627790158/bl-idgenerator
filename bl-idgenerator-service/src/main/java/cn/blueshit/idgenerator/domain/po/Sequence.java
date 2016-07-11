@@ -2,6 +2,7 @@ package cn.blueshit.idgenerator.domain.po;
 
 /**
  * Created by zhaoheng on 2016/7/11.
+ * 对应mysql数据库
  */
 public class Sequence {
 

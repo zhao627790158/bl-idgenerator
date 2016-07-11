@@ -1,4 +1,4 @@
-package cn.blueshit.idgenerator.util;
+package cn.blueshit.idgenerator.util.hash;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
