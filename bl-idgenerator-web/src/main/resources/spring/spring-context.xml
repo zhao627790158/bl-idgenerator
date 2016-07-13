@@ -1,6 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <!--cache datasource-->
+    <bean id="abstractCacheDataSource" abstract="true" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${dataSourceCache.driverClassName}"/>
+        <property name="username" value="${dataSourceCache.username}"/>
+        <property name="password" value="${dataSourceCache.password}"/>
+        <property name="initialSize" value="${dataSourceCache.initialSize}"/>
+        <property name="maxActive" value="${dataSourceCache.maxActive}"/>
+        <property name="maxIdle" value="${dataSourceCache.maxIdle}"/>
+        <property name="minIdle" value="${dataSourceCache.minIdle}"/>
+        <property name="maxWait" value="${dataSourceCache.maxWait}"/>
+        <property name="minEvictableIdleTimeMillis" value="${dataSourceCache.minEvictableIdleTimeMillis}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${dataSourceCache.timeBetweenEvictionRunsMillis}"/>
+        <property name="numTestsPerEvictionRun" value="${dataSourceCache.numTestsPerEvictionRun}"/>
+    </bean>
+
+    <util:map id="cacheDataSources">
+        <entry key="dataSource0">
+            <bean id="dataSource0" parent="abstractCacheDataSource">
+                <property name="url" value="${dataSourceCache_0.url}"/>
+            </bean>
+        </entry>
+        <entry key="dataSource1">
+            <bean id="dataSource1" parent="abstractCacheDataSource">
+                <property name="url" value="${dataSourceCache_1.url}"/>
+            </bean>
+        </entry>
+        <entry key="dataSource2">
+            <bean id="dataSource2" parent="abstractCacheDataSource">
+                <property name="url" value="${dataSourceCache_2.url}"/>
+            </bean>
+        </entry>
+        <entry key="dataSource3">
+            <bean id="dataSource3" parent="abstractCacheDataSource">
+                <property name="url" value="${dataSourceCache_3.url}"/>
+            </bean>
+        </entry>
+        <entry key="dataSource4">
+            <bean id="dataSource4" parent="abstractCacheDataSource">
+                <property name="url" value="${dataSourceCache_4.url}"/>
+            </bean>
+        </entry>
+        <entry key="dataSource5">
+            <bean id="dataSource5" parent="abstractCacheDataSource">
+                <property name="url" value="${dataSourceCache_5.url}"/>
+            </bean>
+        </entry>
+        <entry key="dataSource6">
+            <bean id="dataSource6" parent="abstractCacheDataSource">
+                <property name="url" value="${dataSourceCache_6.url}"/>
+            </bean>
+        </entry>
+        <entry key="dataSource7">
+            <bean id="dataSource7" parent="abstractCacheDataSource">
+                <property name="url" value="${dataSourceCache_7.url}"/>
+            </bean>
+        </entry>
+        <entry key="dataSource8">
+            <bean id="dataSource8" parent="abstractCacheDataSource">
+                <property name="url" value="${dataSourceCache_8.url}"/>
+            </bean>
+        </entry>
+        <entry key="dataSource9">
+            <bean id="dataSource9" parent="abstractCacheDataSource">
+                <property name="url" value="${dataSourceCache_9.url}"/>
+            </bean>
+        </entry>
+    </util:map>
 
 </beans>

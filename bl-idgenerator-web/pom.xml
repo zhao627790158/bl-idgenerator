@@ -48,7 +48,7 @@
     </build>
     <dependencies>
         <dependency>
-            <artifactId>idgenerator</artifactId>
+            <artifactId>bl-idgenerator-service</artifactId>
             <groupId>cn.zh.blueshit</groupId>
             <version>${project.version}</version>
         </dependency>
