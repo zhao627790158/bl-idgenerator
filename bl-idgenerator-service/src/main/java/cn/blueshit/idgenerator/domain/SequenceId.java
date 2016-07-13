@@ -15,6 +15,11 @@ public class SequenceId implements Element {
     public SequenceId() {
     }
 
+    public SequenceId(Long pk, Long id) {
+        this.pk = pk;
+        this.id = id;
+    }
+
     public Long getPk() {
         return pk;
     }

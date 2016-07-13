@@ -29,7 +29,7 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring/applicationContext.xml, classpath:applicationWeb.xml</param-value>
+            <param-value>classpath:spring-config.xml</param-value>
         </init-param>
         <!--当值为0或者大于0时，表示容器在应用启动时就加载并初始化这个servlet-->
         <load-on-startup>0</load-on-startup>

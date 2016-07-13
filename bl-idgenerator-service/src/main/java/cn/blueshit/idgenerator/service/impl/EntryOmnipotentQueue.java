@@ -1,8 +1,10 @@
 package cn.blueshit.idgenerator.service.impl;
 
 import cn.blueshit.idgenerator.domain.SequenceId;
+import cn.blueshit.idgenerator.service.SequenceService;
 import cn.blueshit.idgenerator.util.quene.OmnipotentQueue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +13,17 @@ import java.util.List;
  */
 public class EntryOmnipotentQueue implements OmnipotentQueue<SequenceId> {
 
+
+    //默认使用mysqlSequenceService
+    private SequenceService sourceSequenceServcie;
+
+    //入口队列名称: 如 主键队列 or 订单队列
+    private String sequenceName;
+
+    public EntryOmnipotentQueue(SequenceService sourceSequenceServcie, String sequenceName) {
+        this.sourceSequenceServcie = sourceSequenceServcie;
+        this.sequenceName = sequenceName;
+    }
 
     @Override
     public String getName() {
@@ -22,38 +35,53 @@ public class EntryOmnipotentQueue implements OmnipotentQueue<SequenceId> {
         throw new UnsupportedOperationException("入口Queue不支持此方法");
     }
 
+    /**
+     * 从给点个的 index来获取一定数量的 id
+     *
+     * @param count
+     * @param fromIndex
+     * @return
+     */
     @Override
     public List<SequenceId> peekFromIndex(int count, long fromIndex) {
-        return null;
+        //对应的是 嵌入数据库中的表属性po
+        List<SequenceId> sequenceIds = new ArrayList<SequenceId>(count);
+        Long[] ids = sourceSequenceServcie.getBatchNextVal(sequenceName, count);
+        if (null != ids && ids.length > 0) {
+            for (Long id : ids) {
+                sequenceIds.add(new SequenceId(null, id));
+            }
+        }
+        return sequenceIds;
     }
 
     @Override
     public boolean putToLast(SequenceId element) {
-        return false;
+        throw new UnsupportedOperationException("入口Queue不支持此方法");
     }
 
     @Override
     public SequenceId takeFromFirst() {
-        return null;
+        throw new UnsupportedOperationException("入口Queue不支持此方法");
     }
 
     @Override
     public boolean remove(SequenceId element) {
-        return false;
+        throw new UnsupportedOperationException("入口Queue不支持此方法");
     }
 
     @Override
     public SequenceId peekFirst() {
-        return null;
+        throw new UnsupportedOperationException("入口Queue不支持此方法");
     }
 
     @Override
     public SequenceId peekLast() {
-        return null;
+        throw new UnsupportedOperationException("入口Queue不支持此方法");
     }
 
     @Override
     public boolean clear() {
-        return false;
+        throw new UnsupportedOperationException("入口Queue不支持此方法");
     }
 }

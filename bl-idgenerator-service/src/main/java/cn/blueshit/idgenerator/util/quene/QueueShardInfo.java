@@ -4,7 +4,7 @@ import cn.blueshit.idgenerator.util.hash.ShardInfo;
 
 /**
  * Created by zhaoheng on 2016/7/11.
- * 队列分片信息
+ * 队列分片信息 嵌入式数据库使用
  */
 public class QueueShardInfo<T> extends ShardInfo<T> {
 
