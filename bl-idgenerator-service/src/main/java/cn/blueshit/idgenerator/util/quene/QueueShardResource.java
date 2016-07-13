@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * Created by zhaoheng on 2016/7/11.
- * 数据源 和其对应的 队列(可能是多个,主要看有几个sequenceName)
+ * 嵌入式数据源 和其对应的 队列(可能是多个,主要看有几个sequenceName)
  */
 public class QueueShardResource {
     private String dataSourceName;
