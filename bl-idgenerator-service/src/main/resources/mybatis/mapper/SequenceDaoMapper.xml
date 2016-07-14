@@ -17,7 +17,7 @@
         UPDATE sequence SET currentValue = currentValue + #{param2} WHERE seqName = #{param1}
     </update>
 
-    <select id="getAllSequences" resultType="com.jd.ql.framework.idgenerator.domain.Sequence">
+    <select id="getAllSequences" resultType="cn.blueshit.idgenerator.domain.po.Sequence">
         SELECT seqName, currentValue, increment FROM sequence
     </select>
 
