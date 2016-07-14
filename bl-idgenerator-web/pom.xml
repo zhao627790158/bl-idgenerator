@@ -11,6 +11,19 @@
     <name>bl-idgenerator-web</name>
     <url>http://maven.apache.org</url>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <ebcf.log.level>INFO</ebcf.log.level>
+                <ebcf_system_name>id.live.local</ebcf_system_name>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <finalName>bl-idgenerator-web</finalName>
         <resources>
@@ -22,7 +35,7 @@
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
-                <filtering>false</filtering>
+                <filtering>true</filtering>
             </resource>
         </resources>
         <plugins>

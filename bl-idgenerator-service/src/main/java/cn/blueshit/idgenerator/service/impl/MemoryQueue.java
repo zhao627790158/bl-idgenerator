@@ -34,7 +34,9 @@ public class MemoryQueue extends AutoAddAndBoundedQueue<SequenceId> {
 
     @Override
     public int size() {
-        return targetQueue.size();
+        int size = targetQueue.size();
+        logger.info("--MemoryQueue--size--",Thread.currentThread().getName()+"剩余数-"+size);
+        return size;
     }
 
     @Override
@@ -60,9 +62,9 @@ public class MemoryQueue extends AutoAddAndBoundedQueue<SequenceId> {
 
     @Override
     public SequenceId takeFromFirst() {
-        logger.info("--MemoryQueue--takeFromFirst--",Thread.currentThread().getName());
         //移除blocking栈(后入先出) 第一个元素 java内存中移除一个
         SequenceId sequenceId = targetQueue.pollFirst();
+        logger.info("--MemoryQueue--takeFromFirst--",Thread.currentThread().getName()+"sequenceId--"+sequenceId.getId());
         //删除其 源队列中的数据..这里memoryqueue里的 sourcequeue就是 Dbqueue 再将h2数据库中的值删除掉
         if (sequenceId != null && sourceOmnipotentQueue.remove(sequenceId)) {
             return sequenceId;

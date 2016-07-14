@@ -44,8 +44,9 @@ public class DbQueue extends AutoAddAndBoundedQueue<SequenceId> {
     }
     @Override
     public int size() {
-        logger.info("DbQueue-size--给定的数据源的队列大小"+Thread.currentThread().getName());
-        return targetSequenceIdDao.lengthByName(sequenceName);
+        int i = targetSequenceIdDao.lengthByName(sequenceName);
+        logger.info("DbQueue-size--给定的数据源的队列大小"+Thread.currentThread().getName()+"剩余数量"+i);
+        return i;
     }
 
     @Override
