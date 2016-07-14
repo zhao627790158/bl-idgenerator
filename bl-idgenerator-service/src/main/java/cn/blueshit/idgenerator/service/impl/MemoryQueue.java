@@ -56,9 +56,6 @@ public class MemoryQueue extends AutoAddAndBoundedQueue<SequenceId> {
 
     @Override
     public boolean putToLast(SequenceId sequenceId) {
-        if(null!=sequenceId){
-            logger.info("--MemoryQueue--putToLast--" + Thread.currentThread().getName()+"-"+sourceOmnipotentQueue.getName() + "id为" + sequenceId.getId() + "-px-" + sequenceId.getIndex());
-        }
         return targetQueue.offerLast(sequenceId);
     }
 
