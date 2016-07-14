@@ -8,6 +8,7 @@ import java.util.List;
  * Created by zhaoheng on 2016/7/11.
  * 用于操作mysql数据库
  */
+@MyBatisScan
 public interface SequenceDao {
 
     /**

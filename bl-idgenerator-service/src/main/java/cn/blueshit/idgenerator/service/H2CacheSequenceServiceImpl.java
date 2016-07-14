@@ -193,31 +193,28 @@ public class H2CacheSequenceServiceImpl implements SequenceService, Starter {
                 //memoryQueue 再加入全局启动器中 加入集群节点
                 queuesOfDs.put(sequenceName, memoryQueue);
             }
-            //创建队列集群，使用一致性哈希算法
-            queueCluster = new Sharded<QueueShardResource, QueueShardInfo<QueueShardResource>>(queueClusterNodes);
-            //不db和memory两类补充线程进行整体同步执行
-            List<Starter> synStarters = new ArrayList<Starter>();
-            synStarters.add(new BatchStater(dbQueueSupplierStarters) {
-                @Override
-                public String toString() {
-                    return "所有Db队列";
-                }
-            });
-            synStarters.add(new BatchStater(memoryQueueSupplierStarters) {
-                @Override
-                public String toString() {
-                    return "所有Memory队列";
-                }
-            });
-            //批量同步去执行
-            new SyncStarter(synStarters, checkStarterCompletedInterval).start();
-            //执行完毕
-            startCompleted = true;
-
         }
-
-
-        return false;
+        //创建队列集群，使用一致性哈希算法
+        queueCluster = new Sharded<QueueShardResource, QueueShardInfo<QueueShardResource>>(queueClusterNodes);
+        //不db和memory两类补充线程进行整体同步执行
+        List<Starter> synStarters = new ArrayList<Starter>();
+        synStarters.add(new BatchStater(dbQueueSupplierStarters) {
+            @Override
+            public String toString() {
+                return "所有Db队列";
+            }
+        });
+        synStarters.add(new BatchStater(memoryQueueSupplierStarters) {
+            @Override
+            public String toString() {
+                return "所有Memory队列";
+            }
+        });
+        //批量同步去执行
+        new SyncStarter(synStarters, checkStarterCompletedInterval).start();
+        //执行完毕
+        startCompleted = true;
+        return true;
     }
 
     @Override
