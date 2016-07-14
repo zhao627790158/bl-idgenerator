@@ -9,4 +9,10 @@ CREATE TABLE bl_sequence (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='序列表，表自动生产主键';
 
 INSERT INTO sequence(seqName,currentValue,increment) VALUES ('seq_orderinfo',1,1);
+/*多库步长不一样,例如4个库*/
+INSERT INTO sequence(seqName,currentValue,increment) VALUES ('seq_orderinfo',-3,4);
+INSERT INTO sequence(seqName,currentValue,increment) VALUES ('seq_orderinfo',-2,4);
+INSERT INTO sequence(seqName,currentValue,increment) VALUES ('seq_orderinfo',-1,4);
+INSERT INTO sequence(seqName,currentValue,increment) VALUES ('seq_orderinfo',0,4);
+
 
