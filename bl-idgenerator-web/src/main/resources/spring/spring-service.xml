@@ -50,6 +50,7 @@
         <property name="shardSize" value="${shard.shardSize}"/>
         <property name="batchMaxSize" value="${db.batchMaxSize}"/>
         <property name="sequenceDao" ref="sequenceDao"/>
+        <property name="transactionManager" ref="transactionManager"/>
     </bean>
 
 
