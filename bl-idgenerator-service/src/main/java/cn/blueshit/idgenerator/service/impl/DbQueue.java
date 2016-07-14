@@ -32,8 +32,8 @@ public class DbQueue extends AutoAddAndBoundedQueue<SequenceId> {
     }
 
     private void createTableIfNotExisted() {
-        logger.info("DbQueue-createTableIfNotExisted--创建表"+Thread.currentThread().getName());
         if (!targetSequenceIdDao.contains(sequenceName)) {
+            logger.info("DbQueue-createTableIfNotExisted--创建表"+Thread.currentThread().getName());
             try {
                 targetSequenceIdDao.createTable(sequenceName);
             } catch (Exception e) {
