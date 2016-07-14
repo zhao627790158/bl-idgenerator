@@ -42,6 +42,7 @@ public abstract class AutoAddAndBoundedQueue<E extends Element> implements Omnip
         try {
             int currentSize = size();
             int lackSize = queueMaxSize - currentSize;//需要补充多少
+            logger.info("需要补充数为"+lackSize);
             if (lackSize >= queueSupplyWhenLackSize) {
                 //需要补充的 减去上次没有用完的
                 int needFetchSize = lackSize - supplement.size();

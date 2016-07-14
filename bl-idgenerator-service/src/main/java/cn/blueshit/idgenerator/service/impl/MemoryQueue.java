@@ -35,13 +35,13 @@ public class MemoryQueue extends AutoAddAndBoundedQueue<SequenceId> {
     @Override
     public int size() {
         int size = targetQueue.size();
-        logger.info("--MemoryQueue--size--",Thread.currentThread().getName()+"剩余数-"+size);
+        logger.info("--MemoryQueue--size--" + Thread.currentThread().getName() + "剩余数-" + size);
         return size;
     }
 
     @Override
     public List<SequenceId> peekFromIndex(int count, long fromIndex) {
-        logger.info("--MemoryQueue--peekFromIndex--",Thread.currentThread().getName());
+        logger.info("--MemoryQueue--peekFromIndex--" + Thread.currentThread().getName()+"-count-"+count+"-fromindex-"+fromIndex);
         List<SequenceId> sequenceIds = new ArrayList<SequenceId>(count);
         long cursor = 0, fetchedCount = 0;
         for (SequenceId sequenceId : targetQueue) {
@@ -56,7 +56,7 @@ public class MemoryQueue extends AutoAddAndBoundedQueue<SequenceId> {
 
     @Override
     public boolean putToLast(SequenceId sequenceId) {
-        logger.info("--MemoryQueue--putToLast--",Thread.currentThread().getName());
+        logger.info("--MemoryQueue--putToLast--" + Thread.currentThread().getName() + "id为" + sequenceId.getId() + "-px-" + sequenceId.getIndex());
         return targetQueue.offerLast(sequenceId);
     }
 
@@ -64,7 +64,7 @@ public class MemoryQueue extends AutoAddAndBoundedQueue<SequenceId> {
     public SequenceId takeFromFirst() {
         //移除blocking栈(后入先出) 第一个元素 java内存中移除一个
         SequenceId sequenceId = targetQueue.pollFirst();
-        logger.info("--MemoryQueue--takeFromFirst--",Thread.currentThread().getName()+"sequenceId--"+sequenceId.getId());
+        logger.info("--MemoryQueue--takeFromFirst--" + Thread.currentThread().getName() + "sequenceId--" + sequenceId.getId());
         //删除其 源队列中的数据..这里memoryqueue里的 sourcequeue就是 Dbqueue 再将h2数据库中的值删除掉
         if (sequenceId != null && sourceOmnipotentQueue.remove(sequenceId)) {
             return sequenceId;
@@ -74,27 +74,29 @@ public class MemoryQueue extends AutoAddAndBoundedQueue<SequenceId> {
 
     @Override
     public boolean remove(SequenceId sequenceId) {
-        logger.info("--MemoryQueue--remove--",Thread.currentThread().getName());
+        logger.info("--MemoryQueue--remove--" + Thread.currentThread().getName() + "-id-" + sequenceId.getId() + "-pk-" + sequenceId.getIndex());
         return targetQueue.remove(sequenceId);
     }
 
     @Override
     public SequenceId peekFirst() {
-        logger.info("--MemoryQueue--peekFirst--",Thread.currentThread().getName());
+        SequenceId sequenceId = targetQueue.peekFirst();
+        logger.info("--MemoryQueue--peekFirst--"+Thread.currentThread().getName() + "-id-" + sequenceId.getId() + "-pk-" + sequenceId.getIndex());
         //Retrieves, but does not remove, the first element of this deque, or returns null if this deque is empty.
-        return targetQueue.peekFirst();
+        return sequenceId;
     }
 
     @Override
     public SequenceId peekLast() {
-        logger.info("--MemoryQueue--peekLast--",Thread.currentThread().getName());
+        SequenceId sequenceId = targetQueue.peekLast();
+        logger.info("--MemoryQueue--peekLast--"+Thread.currentThread().getName() + "-id-" + sequenceId.getId() + "-pk-" + sequenceId.getIndex());
         //Retrieves, but does not remove, the last element of this deque, or returns null if this deque is empty.
-        return targetQueue.peekLast();
+        return sequenceId;
     }
 
     @Override
     public boolean clear() {
-        logger.info("--MemoryQueue--clear--",Thread.currentThread().getName());
+        logger.info("--MemoryQueue--clear--"+Thread.currentThread().getName());
         targetQueue.clear();
         return true;
     }
