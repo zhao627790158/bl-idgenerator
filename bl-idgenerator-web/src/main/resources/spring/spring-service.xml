@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+
+    <!--随spring启动-->
+    <bean class="cn.blueshit.idgenerator.job.StarterBySpring">
+        <property name="starter">
+            <bean class="cn.blueshit.idgenerator.job.SyncStarter">
+                <constructor-arg index="0">
+                    <list>
+                        <ref bean="cacheSequenceService"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    <!--配置入口查看 有几个队列要生成-->
+    <bean id="sequenceConfigService" class="cn.blueshit.idgenerator.service.SequenceConfigServiceImpl">
+        <property name="sequenceDao" ref="sequenceDao"/>
+    </bean>
+
+    <!--h2嵌入式数据库的实现-->
+    <bean id="cacheSequenceService" class="cn.blueshit.idgenerator.service.H2CacheSequenceServiceImpl">
+        <property name="sequenceConfigService" ref="sequenceConfigService"/>
+        <property name="sourceSequenceService" ref="dbSequenceService"/>
+        <property name="dataSources" ref="cacheDataSources"/>
+        <property name="dbQueueSupplyEnable" value="${cache.dbQueueSupplyEnable}"/>
+        <property name="dbQueueMaxSize" value="${cache.dbQueueMaxSize}"/>
+        <property name="dbQueueSupplyWhenLackSize" value="${cache.dbQueueSupplyWhenLackSize}"/>
+        <property name="dbQueueSupplyThreadSize" value="${cache.dbSupplyThreadSize}"/>
+        <property name="dbQueueSupplyInterval" value="${cache.dbQueueSupplyInterval}"/>
+        <property name="memoryQueueMaxSize" value="${cache.memoryQueueMaxSize}"/>
+        <property name="memoryQueueSupplyThreadSize" value="${cache.memoryQueueSupplyThreadSize}"/>
+        <property name="memoryQueueSupplyWhenLackSize" value="${cache.memoryQueueSupplyWhenLackSize}"/>
+        <property name="memoryQueueSupplyInterval" value="${cache.memoryQueueSupplyInterval}"/>
+        <property name="memoryQueueShardValueSize" value="${cache.memoryShardValueSize}"/>
+        <property name="memoryQueueShardWeight" value="${cache.memoryShardWeight}"/>
+        <property name="batchMaxSize" value="${cache.batchMaxSize}"/>
+        <property name="checkStarterCompletedInterval" value="${cache.checkStarterCompletedInterval}"/>
+    </bean>
+    <!--msyql queue实现-->
+    <bean id="dbSequenceService" class="cn.blueshit.idgenerator.service.MysqlSequenceServiceImpl">
+        <property name="shardSize" value="${shard.shardSize}"/>
+        <property name="batchMaxSize" value="${db.batchMaxSize}"/>
+        <property name="sequenceDao" ref="sequenceDao"/>
+    </bean>
+
+
+
+    <bean id="failoverSequenceService" class="cn.blueshit.idgenerator.service.impl.FailoverSequenceServiceImpl">
+        <constructor-arg index="0">
+            <list>
+                <ref bean="cacheSequenceService"/>
+                <ref bean="dbSequenceService"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+
+
+
+
+</beans>

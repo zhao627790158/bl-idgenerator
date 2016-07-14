@@ -8,3 +8,5 @@ CREATE TABLE bl_sequence (
   UNIQUE KEY name (seqName)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='序列表，表自动生产主键';
 
+INSERT INTO sequence(seqName,currentValue,increment) VALUES ('seq_orderinfo',1,1);
+

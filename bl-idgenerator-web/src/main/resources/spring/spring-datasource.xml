@@ -7,8 +7,44 @@
         http://www.springframework.org/schema/util
        http://www.springframework.org/schema/util/spring-util.xsd">
 
+    <!--所有用到的数据源-->
+    <bean id="abstractMysqlDataSource" abstract="true" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${dataSource.driverClassName}"/>
+        <property name="username" value="${dataSource.username}"/>
+        <property name="password" value="${dataSource.password}"/>
+        <property name="initialSize" value="${dataSource.initialSize}"/>
+        <property name="maxActive" value="${dataSource.maxActive}"/>
+        <property name="maxIdle" value="${dataSource.maxIdle}"/>
+        <property name="minIdle" value="${dataSource.minIdle}"/>
+        <property name="maxWait" value="${dataSource.maxWait}"/>
+        <property name="minEvictableIdleTimeMillis" value="${dataSource.minEvictableIdleTimeMillis}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${dataSource.timeBetweenEvictionRunsMillis}"/>
+        <property name="numTestsPerEvictionRun" value="${dataSource.numTestsPerEvictionRun}"/>
+    </bean>
+    <bean id="dataSource0" parent="abstractMysqlDataSource">
+        <property name="url" value="${dataSource0.url}"/>
+    </bean>
 
-    <!--cache datasource-->
+    <!-- Mybatis配置 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"></property>
+        <property name="dataSource" ref="dataSource0" />
+        <property name="mapperLocations" value="classpath:/mybatis/mapper/*.xml" />
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="cn.blueshit.idgenerator.dao"/>
+        <property name="annotationClass" value="cn.blueshit.idgenerator.dao.MyBatisScan"/>
+    </bean>
+
+    <!--先搞单数据源-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource0"/>
+    </bean>
+
+
+    <!--cache datasource 10个-->
     <bean id="abstractCacheDataSource" abstract="true" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="${dataSourceCache.driverClassName}"/>
         <property name="username" value="${dataSourceCache.username}"/>
