@@ -79,6 +79,7 @@ public class MysqlSequenceServiceImpl implements SequenceService {
      */
     @Override
     public Long[] getBatchNextVal(String sequenceName, int count) {
+        logger.info("mysql开始获取id队列信息");
         TransactionStatus transactionStatus = null;
         Long lastVal = null;
         //========================================

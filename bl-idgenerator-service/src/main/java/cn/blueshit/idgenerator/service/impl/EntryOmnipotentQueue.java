@@ -3,6 +3,8 @@ package cn.blueshit.idgenerator.service.impl;
 import cn.blueshit.idgenerator.domain.SequenceId;
 import cn.blueshit.idgenerator.service.SequenceService;
 import cn.blueshit.idgenerator.util.quene.OmnipotentQueue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
  * 入口队列..刚启动时或者需要补充h2时,从mysql数据库中查询当前序列号
  */
 public class EntryOmnipotentQueue implements OmnipotentQueue<SequenceId> {
+
+    private static final Logger logger = LoggerFactory.getLogger(EntryOmnipotentQueue.class);
 
 
     //默认使用mysqlSequenceService
@@ -44,6 +48,7 @@ public class EntryOmnipotentQueue implements OmnipotentQueue<SequenceId> {
      */
     @Override
     public List<SequenceId> peekFromIndex(int count, long fromIndex) {
+        logger.info("EntryQueue--peekFromIndex--"+Thread.currentThread().getName());
         //对应的是 嵌入数据库中的表属性po
         List<SequenceId> sequenceIds = new ArrayList<SequenceId>(count);
         Long[] ids = sourceSequenceServcie.getBatchNextVal(sequenceName, count);
