@@ -113,7 +113,7 @@ public class MysqlSequenceServiceImpl implements SequenceService {
                 batchVal[j++] = lastVal - shardSize * i;
             }
         }
-        logger.info("mysql-getBatchNextVal-0,1,2,last"+batchVal[0],batchVal[1],batchVal[2],batchVal[batchVal.length-1]);
+        logger.info("mysql-getBatchNextVal-0,1,2,last"+batchVal[0]+"-1-"+batchVal[1]+"-2-"+batchVal[2]+"-last-"+batchVal[batchVal.length-1]);
 
         return batchVal;
     }
