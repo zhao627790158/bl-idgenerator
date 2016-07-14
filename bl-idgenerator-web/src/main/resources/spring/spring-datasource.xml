@@ -21,6 +21,7 @@
         <property name="timeBetweenEvictionRunsMillis" value="${dataSource.timeBetweenEvictionRunsMillis}"/>
         <property name="numTestsPerEvictionRun" value="${dataSource.numTestsPerEvictionRun}"/>
     </bean>
+    <!--开始分多个库 测试使用一个  参数使用shardingjdbc或者交易的路由实现-->
     <bean id="dataSource0" parent="abstractMysqlDataSource">
         <property name="url" value="${dataSource0.url}"/>
     </bean>
