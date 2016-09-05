@@ -61,7 +61,8 @@ public class MemoryQueue extends AutoAddAndBoundedQueue<SequenceId> {
 
     @Override
     public SequenceId takeFromFirst() {
-        //移除blocking栈(后入先出) 第一个元素 java内存中移除一个
+        //移除blocking第一个元素 java内存中移除一个
+        //Deque应该是栈和队列的结合吧，（deque，全名double-ended queue）是一种具有队列和栈的性质的数据结构。双端队列中的元素可以从两端弹出，其限定插入和删除操作在表的两端进行。
         SequenceId sequenceId = targetQueue.pollFirst();
         if(null!=sequenceId){
             logger.info("--MemoryQueue--takeFromFirst--" + Thread.currentThread().getName()+"-"+sourceOmnipotentQueue.getName() + "sequenceId--" + sequenceId.getId());

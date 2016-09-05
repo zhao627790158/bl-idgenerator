@@ -25,7 +25,7 @@ public abstract class AutoAddAndBoundedQueue<E extends Element> implements Omnip
     //是否执行完毕
     private boolean initialized;
     //当从db中获取过多但是,队列已经满时,存放剩余id,用于下次补充使用
-    //阻塞栈 后入先出
+    //Deque应该是栈和队列的结合吧，（deque，全名double-ended queue）是一种具有队列和栈的性质的数据结构。双端队列中的元素可以从两端弹出，其限定插入和删除操作在表的两端进行。
     private final BlockingDeque<E> supplement = new LinkedBlockingDeque<E>();
 
     //源队列名称 h2 dbqueue源队列为EntryOmnipotentQueue 入口queue
