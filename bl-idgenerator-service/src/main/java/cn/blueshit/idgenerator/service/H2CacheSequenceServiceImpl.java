@@ -96,6 +96,9 @@ public class H2CacheSequenceServiceImpl implements SequenceService, Starter {
             throw new RuntimeException("没有找到sequence=" + sequenceName + "使用前请先配置");
         }
         SequenceId sequenceId = omnipotentQueue.takeFromFirst();
+        if (LoggerFactory.getLogger("testLog").isDebugEnabled()) {
+            LoggerFactory.getLogger("testLog").debug("id:{}", sequenceId.getId());
+        }
         return sequenceId != null ? sequenceId.getId() : null;
     }
 
