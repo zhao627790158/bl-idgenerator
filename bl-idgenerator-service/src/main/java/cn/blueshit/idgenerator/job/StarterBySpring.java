@@ -16,11 +16,12 @@ public class StarterBySpring implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        new Thread() {
+       /* new Thread() {
             @Override
             public void run() {
                 starter.start();
             }
-        }.start();
+        }.start();*/
+        starter.start();
     }
 }

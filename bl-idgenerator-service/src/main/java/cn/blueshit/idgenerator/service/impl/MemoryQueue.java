@@ -35,7 +35,7 @@ public class MemoryQueue extends AutoAddAndBoundedQueue<SequenceId> {
     @Override
     public int size() {
         int size = targetQueue.size();
-        logger.info("--MemoryQueue--size--" + Thread.currentThread().getName()+"-"+sourceOmnipotentQueue.getName() + "剩余数-" + size);
+        //logger.info("--MemoryQueue--size--" + Thread.currentThread().getName()+"-"+sourceOmnipotentQueue.getName() + "剩余数-" + size);
         return size;
     }
 
